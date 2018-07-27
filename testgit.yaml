@@ -1,0 +1,21 @@
+--- # myfirst yaml
+ - hosts: boa
+   remote_user: ansible
+   become: yes
+   become_method: sudo
+   connection: ssh
+   gather_facts: yes
+   vars:
+     username: myuser
+   tasks:
+   - name: Installing httpd on both hosts
+     yum:
+        name: httpd
+        state: latest
+     notify:
+       - startservice
+   handlers:
+   - name: startservice
+     service: 
+        name: httpd
+        state: restarted
